@@ -137,4 +137,11 @@ public class VarastoTest {
         assertEquals("saldo = 2.0, vielä tilaa 8.0", varasto.toString());
     }
 
+    @Test
+    public void testinRikkominen() {
+        varasto = new Varasto(10, 2);
+
+        assertEquals(1, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+
 }
