@@ -65,4 +65,76 @@ public class VarastoTest {
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
 
+    @Test
+    public void liikaaLisaaminenTayttaaVaraston() {
+        varasto.lisaaVarastoon(5);
+        varasto.lisaaVarastoon(10);
+
+        // varaston pitäisi olla täynnä
+        assertEquals(varasto.getTilavuus(), varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void liikaaOttaminenTyhjentaaVaraston() {
+        varasto.lisaaVarastoon(5);
+        double saatuMaara = varasto.otaVarastosta(10);
+
+        // varaston pitäisi olla tyhjä ja saatuMaara 5
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+        assertEquals(5, saatuMaara, vertailuTarkkuus);
+    }
+
+    @Test
+    public void negatiivinenLisaaminenEiVaikutaVarastoon() {
+        varasto.lisaaVarastoon(5);
+        varasto.lisaaVarastoon(-1);
+
+        // varaston pitäisi pysyä 5:ssä
+        assertEquals(5, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void negatiivinenOttaminenPalauttaaNollan() {
+        varasto.lisaaVarastoon(5);
+        double saatuMaara = varasto.otaVarastosta(-1);
+
+        // saatuMaara pitää olla 0
+        assertEquals(0, saatuMaara, vertailuTarkkuus);
+    }
+
+    @Test
+    public void negatiivinenTilavuusLuoEpakelvonVaraston() {
+        varasto = new Varasto(-1);
+        // Tilavuus pitää olla 0
+        assertEquals(0, varasto.getTilavuus(), vertailuTarkkuus);
+
+        varasto = new Varasto(-1, 1);
+        // Tilavuus pitää olla 0
+        assertEquals(0, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void negatiivinenAlkusaldoLuoTyhjanVaraston() {
+        varasto = new Varasto(10, -1);
+        // Saldon pitää olla 0
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void uudellaVarastollaOikeaTilavuusJaSaldo() {
+        varasto = new Varasto(10, 1);
+
+        // Tilavuus pitää olla 0 ja saldo 1
+        assertEquals(10, varasto.getTilavuus(), vertailuTarkkuus);
+        assertEquals(1, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void merkkijonopalautusToimii() {
+        varasto = new Varasto(10, 2);
+
+        // Palauttaa saldon 2 ja tilaa 8
+        assertEquals("saldo = 2.0, vielä tilaa 8.0", varasto.toString());
+    }
+
 }
