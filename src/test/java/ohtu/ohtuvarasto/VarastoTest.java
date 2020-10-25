@@ -137,4 +137,6 @@ public class VarastoTest {
         assertEquals("saldo = 2.0, vielä tilaa 8.0", varasto.toString());
     }
 
+    // Testit päättyvät tähän
+
 }
